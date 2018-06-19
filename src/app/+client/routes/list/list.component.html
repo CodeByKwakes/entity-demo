@@ -1,3 +1,3 @@
-<p>
-  list works!
-</p>
+<ul>
+  <li *ngFor="let client of client$ | async"> {{client.meta.name}}</li>
+</ul>
