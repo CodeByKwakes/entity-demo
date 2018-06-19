@@ -1,8 +1,9 @@
-import { DataApi, Payload } from './../../../core/models/data-api';
 import { Component, OnInit } from '@angular/core';
-import { DataService } from './../../../core/services/data.service';
-import { map, tap } from 'rxjs/operators';
+import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { ClientState } from '../../../core/store/client.state';
+import { Payload } from './../../../core/models/data-api';
+import { LoadClient } from './../../../core/store/client.actions';
 
 @Component({
   selector: 'app-list',
@@ -10,15 +11,11 @@ import { Observable } from 'rxjs';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  client$: Observable<Payload>;
-  constructor(private api: DataService) { }
+  @Select(ClientState.getAllClient)  client$: Observable<Payload>;
+  constructor(private store: Store) { }
 
   ngOnInit() {
-    this.client$ = this.api.list()
-      .pipe(
-        map((response: DataApi) => response.data.payload),
-        tap(payload => console.log('payload', payload))
-      );
+    this.store.dispatch(new LoadClient());
   }
 
 }
