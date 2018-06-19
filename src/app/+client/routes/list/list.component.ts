@@ -11,11 +11,12 @@ import { LoadClient } from './../../../core/store/client.actions';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  @Select(ClientState.getAllClient)  client$: Observable<Payload>;
+  @Select(ClientState.getAllClient) client$: Observable<Payload[]>;
   constructor(private store: Store) { }
 
   ngOnInit() {
     this.store.dispatch(new LoadClient());
   }
 
+  onSelect(event: number[]) { }
 }
