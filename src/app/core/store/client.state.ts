@@ -4,6 +4,7 @@ import { DataService } from './../services/data.service';
 import { Payload, DataApi } from './../models/data-api';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { of } from 'rxjs';
+import { RouterState, RouterStateModel } from './router.state';
 
 export interface ClientStateModel {
   list: Payload[];
@@ -25,6 +26,10 @@ export interface ClientStateModel {
 export class ClientState {
   @Selector() static getAllClient(state: ClientStateModel) {
     return Object.keys(state.entities).map(id => state.entities[id]);
+  }
+
+  @Selector([RouterState]) static getSelectedClient(state: ClientStateModel, router: RouterStateModel) {
+    return router && state.entities[router.params.clientId];
   }
 
   @Selector() static isLoading(state: ClientStateModel) {
