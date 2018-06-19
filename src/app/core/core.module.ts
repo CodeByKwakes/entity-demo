@@ -1,3 +1,4 @@
+import { RouterState } from './store/router.state';
 import { ClientState } from './store/client.state';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -9,7 +10,10 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 @NgModule({
   imports: [
     CommonModule,
-    NgxsModule.forRoot([ClientState]),
+    NgxsModule.forRoot([
+      ClientState,
+      RouterState
+    ]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot()
   ],
