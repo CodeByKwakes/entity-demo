@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 
 export interface ClientStateModel {
   list: Payload[];
+  entities: { [id: number]: Payload };
   loading: boolean;
   failed: boolean;
 }
@@ -15,6 +16,7 @@ export interface ClientStateModel {
   name: 'Client',
   defaults: {
     list: [],
+    entities: {},
     loading: false,
     failed: false,
   }
@@ -22,11 +24,15 @@ export interface ClientStateModel {
 
 export class ClientState {
   @Selector() static getAllClient(state: ClientStateModel) {
-    return state.list;
+    return Object.keys(state.entities).map(id => state.entities[id]);
   }
 
   @Selector() static isLoading(state: ClientStateModel) {
     return state.loading;
+  }
+
+  @Selector() static getClientEntities(state: ClientStateModel) {
+    return state.entities;
   }
 
   constructor(private api: DataService) { }
@@ -49,11 +55,26 @@ export class ClientState {
   @Action(LoadClientSuccess)
   loadClientSuccess({ getState, patchState }: StateContext<ClientStateModel>, { payload }: LoadClientSuccess) {
     const state = getState();
+    const clients = payload;
+
+    const enitites = clients.reduce(
+      // tslint:disable-next-line:no-shadowed-variable
+      (enitites: { [id: number]: Payload }, client: Payload) => {
+        return {
+          ...enitites,
+          [client.id]: client
+        };
+      },
+      {
+        ...state.entities
+      }
+    );
     patchState({
       ...state,
       loading: false,
       failed: false,
-      list: payload,
+      entities: enitites
+      // list: payload,
     });
   }
 
