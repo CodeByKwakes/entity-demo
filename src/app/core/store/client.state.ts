@@ -1,5 +1,5 @@
 import { map, catchError } from 'rxjs/operators';
-import { LoadClient, LoadClientSuccess, LoadClientFail } from './client.actions';
+import { LoadClient, LoadClientSuccess, LoadClientFail, SelectClient } from './client.actions';
 import { DataService } from './../services/data.service';
 import { Payload, DataApi } from './../models/data-api';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
@@ -11,6 +11,7 @@ export interface ClientStateModel {
   entities: { [id: number]: Payload };
   loading: boolean;
   failed: boolean;
+  selectClienId: string;
 }
 
 @State<ClientStateModel>({
@@ -20,6 +21,7 @@ export interface ClientStateModel {
     entities: {},
     loading: false,
     failed: false,
+    selectClienId: null
   }
 })
 
@@ -38,6 +40,14 @@ export class ClientState {
 
   @Selector() static getClientEntities(state: ClientStateModel) {
     return state.entities;
+  }
+
+  @Selector() static getSelected(state: ClientStateModel) {
+    return Object.keys(state.entities)
+      .map(id => state.entities[id])
+      .find(
+        (client: Payload) => client.id === state.selectClienId
+    );
   }
 
   constructor(private api: DataService) { }
@@ -93,5 +103,15 @@ export class ClientState {
       list: [],
     });
   }
+
+  @Action(SelectClient)
+  ActionName({ getState, patchState }: StateContext<ClientStateModel>, { payload }: SelectClient) {
+    const state = getState();
+    patchState({
+      ...state,
+      selectClienId: payload,
+    });
+  }
+
   //#endregion;
 }

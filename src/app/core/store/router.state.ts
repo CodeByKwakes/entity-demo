@@ -37,8 +37,12 @@ export class RouterState {
 
   private activatedRoute: ActivatedRouteSnapshot;
 
-  @Selector() static getRouterState(state: RouterStateModel) {
+  @Selector() static getRouterPath(state: RouterStateModel) {
     return state.path;
+  }
+
+  @Selector() static getRouterParams(state: RouterStateModel) {
+    return state.params;
   }
 
   constructor(

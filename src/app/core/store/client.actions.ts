@@ -12,3 +12,8 @@ export class LoadClientFail {
   static readonly type = '[Client] Load Client Fail';
   constructor(public readonly payload?: any) { }
 }
+
+export class SelectClient {
+  static readonly type = '[Client] Select Client';
+  constructor(public readonly payload: string) { }
+}
