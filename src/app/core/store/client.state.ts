@@ -6,9 +6,14 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { of } from 'rxjs';
 import { RouterState, RouterStateModel } from './router.state';
 
-export interface ClientStateModel {
-  list: Payload[];
-  entities: { [id: number]: Payload };
+interface EntityState<V> {
+  ids: string[];
+  entities: { [id: string]: V };
+}
+
+export interface ClientStateModel extends EntityState<Payload> {
+  // list: Payload[];
+  // entities: { [id: number]: Payload };
   loading: boolean;
   failed: boolean;
 }
@@ -16,7 +21,7 @@ export interface ClientStateModel {
 @State<ClientStateModel>({
   name: 'Client',
   defaults: {
-    list: [],
+    ids: [],
     entities: {},
     loading: false,
     failed: false,
@@ -78,8 +83,8 @@ export class ClientState {
       ...state,
       loading: false,
       failed: false,
-      entities: enitites
-      // list: payload,
+      entities: enitites,
+      ids: [],
     });
   }
 
@@ -90,7 +95,6 @@ export class ClientState {
       ...state,
       loading: false,
       failed: true,
-      list: [],
     });
   }
   //#endregion;
