@@ -1,5 +1,5 @@
 import { map, catchError } from 'rxjs/operators';
-import { LoadClient, LoadClientSuccess, LoadClientFail } from './client.actions';
+import { LoadClient, LoadClientSuccess, LoadClientFail, SelectClient } from './client.actions';
 import { DataService } from './../services/data.service';
 import { Payload, DataApi } from './../models/data-api';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
@@ -45,6 +45,14 @@ export class ClientState {
     return state.entities;
   }
 
+  @Selector() static getSelected(state: ClientStateModel) {
+    return Object.keys(state.entities)
+      .map(id => state.entities[id])
+      .find(
+        (client: Payload) => client.id === state.selectedClientId
+    );
+  }
+
   constructor(private api: DataService) { }
 
   //#region ---- Load List State ----
@@ -85,6 +93,16 @@ export class ClientState {
       failed: true,
     });
   }
+
+  @Action(SelectClient)
+  ActionName({ getState, patchState }: StateContext<ClientStateModel>, { payload }: SelectClient) {
+    const state = getState();
+    patchState({
+      ...state,
+      selectedClientId: payload
+    });
+  }
+
   //#endregion;
 }
 

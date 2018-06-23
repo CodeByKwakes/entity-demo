@@ -14,9 +14,7 @@ export class ListComponent implements OnInit {
   @Select(ClientState.getAllClient) client$: Observable<Payload[]>;
   constructor(private store: Store) { }
 
-  ngOnInit() {
-    this.store.dispatch(new LoadClient());
-  }
+  ngOnInit() { }
 
   onSelect(event: number[]) { }
 }
