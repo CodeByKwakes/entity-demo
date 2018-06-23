@@ -7,8 +7,8 @@ import { of } from 'rxjs';
 import { RouterState, RouterStateModel } from './router.state';
 
 interface EntityState<V> {
-  ids: string[];
-  entities: { [id: string]: V };
+  ids: string[] | number[];
+  entities: { [id: string ]: V };
 }
 
 export interface ClientStateModel extends EntityState<Payload> {
@@ -30,7 +30,7 @@ export interface ClientStateModel extends EntityState<Payload> {
 
 export class ClientState {
   @Selector() static getAllClient(state: ClientStateModel) {
-    return Object.keys(state.entities).map(id => state.entities[id]);
+    return Object.values(state.entities);
   }
 
   @Selector([RouterState]) static getSelectedClient(state: ClientStateModel, router: RouterStateModel) {
@@ -65,14 +65,15 @@ export class ClientState {
   @Action(LoadClientSuccess)
   loadClientSuccess({ getState, patchState }: StateContext<ClientStateModel>, { payload }: LoadClientSuccess) {
     const state = getState();
-    const clients = payload;
 
-    const enitites = clients.reduce(
+    const ids = state.ids.slice(0);
+    console.log('ids[]', ids);
+    const enitites = payload.reduce(
       // tslint:disable-next-line:no-shadowed-variable
-      (enitites: { [id: number]: Payload }, client: Payload) => {
+      (enitites: { [id: number]: Payload }, item: Payload) => {
         return {
           ...enitites,
-          [client.id]: client
+          [item.id]: item
         };
       },
       {
