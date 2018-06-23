@@ -8,7 +8,7 @@ import { RouterState, RouterStateModel } from './router.state';
 
 interface EntityState<V> {
   ids: string[] | number[];
-  entities: { [id: string ]: V };
+  entities: { [id: string]: V };
 }
 
 export interface ClientStateModel extends EntityState<Payload> {
@@ -67,19 +67,21 @@ export class ClientState {
     const state = getState();
 
     const ids = state.ids.slice(0);
+
     console.log('ids[]', ids);
-    const enitites = payload.reduce(
-      // tslint:disable-next-line:no-shadowed-variable
-      (enitites: { [id: number]: Payload }, item: Payload) => {
-        return {
-          ...enitites,
-          [item.id]: item
-        };
-      },
-      {
-        ...state.entities
-      }
-    );
+    const enitites = arrayToObject(payload, state, 'id');
+    // const enitites = payload.reduce(
+    //   // tslint:disable-next-line:no-shadowed-variable
+    //   (enitites: { [id: number]: Payload }, item: Payload) => {
+    //     return {
+    //       ...enitites,
+    //       [item.id]: item
+    //     };
+    //   },
+    //   {
+    //     ...state.entities
+    //   }
+    // );
     patchState({
       ...state,
       loading: false,
@@ -100,3 +102,13 @@ export class ClientState {
   }
   //#endregion;
 }
+
+const arrayToObject = (array, state, keyField) =>
+  array.reduce((obj, item) => {
+    return {
+      ...obj,
+      [item[keyField]]: item
+    };
+  }, {
+      ...state.obj
+    });
