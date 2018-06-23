@@ -1,4 +1,3 @@
 <ul>
-  <li *ngFor="let client of client$ | async"
-      [routerLink]="['/client', client.id]"> {{client.meta.name}}</li>
+  <app-c-list [list]="client$ |async"></app-c-list>
 </ul>

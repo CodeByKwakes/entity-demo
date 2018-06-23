@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
+import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ClientState } from '../../../core/store/client.state';
 import { Payload } from './../../../core/models/data-api';
-import { LoadClient } from './../../../core/store/client.actions';
 
 @Component({
   selector: 'app-list',
@@ -12,9 +11,8 @@ import { LoadClient } from './../../../core/store/client.actions';
 })
 export class ListComponent implements OnInit {
   @Select(ClientState.getAllClient) client$: Observable<Payload[]>;
-  constructor(private store: Store) { }
+  constructor() { }
 
   ngOnInit() { }
 
-  onSelect(event: number[]) { }
 }

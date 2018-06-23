@@ -1,0 +1,2 @@
+<li *ngFor="let client of list"
+    [routerLink]="['/client', client.id]"> {{client.meta.name}}</li>

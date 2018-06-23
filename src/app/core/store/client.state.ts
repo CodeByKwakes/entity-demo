@@ -29,6 +29,7 @@ export interface ClientStateModel extends EntityState<Payload> {
 })
 
 export class ClientState {
+
   @Selector() static getAllClient(state: ClientStateModel) {
     return Object.values(state.entities);
   }
@@ -46,11 +47,7 @@ export class ClientState {
   }
 
   @Selector() static getSelected(state: ClientStateModel) {
-    return Object.keys(state.entities)
-      .map(id => state.entities[id])
-      .find(
-        (client: Payload) => client.id === state.selectedClientId
-    );
+    return state.entities[state.selectedClientId];
   }
 
   constructor(private api: DataService) { }
@@ -75,7 +72,7 @@ export class ClientState {
     const state = getState();
     const enitites = arrayToObject(payload, state, 'id');
     const ids = payload.map(pay => pay.id);
-    console.log('ids[]', ids);
+
     patchState({
       ...state,
       loading: false,
