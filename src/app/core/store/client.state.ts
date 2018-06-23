@@ -12,10 +12,9 @@ interface EntityState<V> {
 }
 
 export interface ClientStateModel extends EntityState<Payload> {
-  // list: Payload[];
-  // entities: { [id: number]: Payload };
   loading: boolean;
   failed: boolean;
+  selectedClientId: string | number;
 }
 
 @State<ClientStateModel>({
@@ -25,6 +24,7 @@ export interface ClientStateModel extends EntityState<Payload> {
     entities: {},
     loading: false,
     failed: false,
+    selectedClientId: null
   }
 })
 
@@ -65,29 +65,14 @@ export class ClientState {
   @Action(LoadClientSuccess)
   loadClientSuccess({ getState, patchState }: StateContext<ClientStateModel>, { payload }: LoadClientSuccess) {
     const state = getState();
-
-    const ids = state.ids.slice(0);
-
-    console.log('ids[]', ids);
     const enitites = arrayToObject(payload, state, 'id');
-    // const enitites = payload.reduce(
-    //   // tslint:disable-next-line:no-shadowed-variable
-    //   (enitites: { [id: number]: Payload }, item: Payload) => {
-    //     return {
-    //       ...enitites,
-    //       [item.id]: item
-    //     };
-    //   },
-    //   {
-    //     ...state.entities
-    //   }
-    // );
+    const ids = payload.map(pay => pay.id);
+    console.log('ids[]', ids);
     patchState({
       ...state,
       loading: false,
-      failed: false,
       entities: enitites,
-      ids: [],
+      ids
     });
   }
 
@@ -109,6 +94,7 @@ const arrayToObject = (array, state, keyField) =>
       ...obj,
       [item[keyField]]: item
     };
-  }, {
+  },
+    {
       ...state.obj
     });
