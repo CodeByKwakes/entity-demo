@@ -7,7 +7,13 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./c-list.component.scss']
 })
 export class CListComponent implements OnInit {
-  @Input() list: Payload[] = [];
+  private _list: Payload[] = [];
+  public get list(): Payload[] {
+    return this._list;
+  }
+  @Input() public set list(value: Payload[]) {
+    this._list = value;
+  }
   constructor() { }
 
   ngOnInit() {
