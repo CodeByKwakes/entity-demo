@@ -5,8 +5,8 @@ import { Payload, DataApi } from './../models/data-api';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { of } from 'rxjs';
 import { RouterState, RouterStateModel } from './router.state';
-import { EntityState, createEnitites } from './entity.utils';
-
+import { createEnitites } from './entity.utils';
+import { EntityState } from './entity.model';
 
 export interface ClientStateModel extends EntityState<Payload> {
   loading: boolean;

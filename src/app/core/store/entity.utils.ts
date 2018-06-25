@@ -1,17 +1,5 @@
 import { Payload } from '../models/data-api';
-
-export declare interface DictionaryNum<T> {
-  [key: number]: T;
-}
-
-export declare abstract class Dictionary<T> implements DictionaryNum<T> {
-  [key: string]: T;
-}
-
-export interface EntityState<T> {
-  ids: string[] | number[];
-  entities: Dictionary<T>;
-}
+import { Dictionary } from './entity.model';
 
 export const createEnitites = (array: any[], keyField, state?) => {
   const ids = array.map(item => item[keyField]);
