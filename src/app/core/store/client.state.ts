@@ -8,13 +8,13 @@ import { RouterState, RouterStateModel } from './router.state';
 
 interface EntityState<V> {
   ids: string[] | number[];
-  entities: { [id: string]: V };
+  entities: { [key: string]: V };
 }
 
 export interface ClientStateModel extends EntityState<Payload> {
   loading: boolean;
   failed: boolean;
-  selectedClientId: string | number;
+  selectedId: string | number;
 }
 
 @State<ClientStateModel>({
@@ -24,7 +24,7 @@ export interface ClientStateModel extends EntityState<Payload> {
     entities: {},
     loading: false,
     failed: false,
-    selectedClientId: null
+    selectedId: null
   }
 })
 
@@ -47,7 +47,7 @@ export class ClientState {
   }
 
   @Selector() static getSelected(state: ClientStateModel) {
-    return state.entities[state.selectedClientId];
+    return state.entities[state.selectedId];
   }
 
   constructor(private api: DataService) { }
@@ -98,7 +98,7 @@ export class ClientState {
     const state = getState();
     patchState({
       ...state,
-      selectedClientId: payload
+      selectedId: payload
     });
   }
 
