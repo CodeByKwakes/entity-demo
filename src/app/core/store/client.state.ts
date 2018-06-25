@@ -6,7 +6,7 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { of } from 'rxjs';
 import { RouterState, RouterStateModel } from './router.state';
 import { createEnitites } from './entity.utils';
-import { EntityState } from './entity.model';
+import { EntityState, EntityAdapter, createEntityAdapter } from './entity.model';
 
 export interface ClientStateModel extends EntityState<Client> {
   loading: boolean;
@@ -14,6 +14,9 @@ export interface ClientStateModel extends EntityState<Client> {
   selectedId: string | number;
 }
 
+// const clientAdapter: EntityAdapter<Client> = createEntityAdapter<Client>({
+//   selectId: (client: Client) => client.id
+// });
 const initialState: ClientStateModel = {
   ids: [],
   entities: {},
@@ -21,6 +24,9 @@ const initialState: ClientStateModel = {
   failed: false,
   selectedId: null
 };
+
+// const init: ClientStateModel = clientAdapter.getInitialState(initialState);
+
 @State<ClientStateModel>({
   name: 'Client',
   defaults: initialState
