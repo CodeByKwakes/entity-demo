@@ -57,3 +57,16 @@ export interface EntityAdapter<T> extends EntityStateAdapter<T> {
   getSelectors(): EntitySelectors<T, EntityState<T>>;
   getSelectors<V>(selectState: (state: V) => EntityState<T>): EntitySelectors<T, V>;
 }
+
+export declare function createEntityAdapter<T>(options?: {
+  selectId?: IdSelector<T>;
+  sortComparer?: false | Comparer<T>;
+}): EntityAdapter<T>;
+
+export declare function getInitialEntityState<V>(): EntityState<V>;
+export declare function createInitialStateFactory<V>(): {
+  getInitialState: {
+    (): EntityState<V>;
+    <S extends object>(additionalState: S): EntityState<V> & S;
+  };
+};

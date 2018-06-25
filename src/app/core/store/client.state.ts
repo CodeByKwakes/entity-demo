@@ -14,15 +14,16 @@ export interface ClientStateModel extends EntityState<Payload> {
   selectedId: string | number;
 }
 
+const initialState: ClientStateModel = {
+  ids: [],
+  entities: {},
+  loading: false,
+  failed: false,
+  selectedId: null
+};
 @State<ClientStateModel>({
   name: 'Client',
-  defaults: {
-    ids: [],
-    entities: {},
-    loading: false,
-    failed: false,
-    selectedId: null
-  }
+  defaults: initialState
 })
 
 export class ClientState {
