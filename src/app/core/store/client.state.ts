@@ -70,14 +70,16 @@ export class ClientState {
   @Action(LoadClientSuccess)
   loadClientSuccess({ getState, patchState }: StateContext<ClientStateModel>, { payload }: LoadClientSuccess) {
     const state = getState();
-    const enitites = arrayToObject(payload, state, 'id');
-    const ids = payload.map(pay => pay.id);
+    // const enitites = arrayToObject(payload, state, 'id');
+    // const enitites = createEnitites(payload, 'id', state);
+
+    // const ids = payload.map(pay => pay.id);
 
     patchState({
       ...state,
       loading: false,
-      entities: enitites,
-      ids
+      // ...createEnitites(payload, 'id', state)
+      entities: createEnitites(payload, 'id', state)
     });
   }
 
@@ -103,13 +105,42 @@ export class ClientState {
   //#endregion;
 }
 
-const arrayToObject = (array, state, keyField) =>
-  array.reduce((obj, item) => {
-    return {
-      ...obj,
-      [item[keyField]]: item
-    };
-  },
-    {
-      ...state.obj
-    });
+// const arrayToObject = (array, state, keyField) =>
+//   array.reduce((obj, item) => {
+//     return {
+//       ...obj,
+//       [item[keyField]]: item
+//     };
+//   },
+//     {
+//       ...state.obj
+//     });
+
+
+const createEnitites = (array: any[], keyField, state?) => {
+  const ids = array.map(item => item[keyField]);
+  const entities: {
+    [key: number]: any;
+  } = {};
+  array.forEach(item => {
+    entities[item[keyField]] = item;
+  });
+  state.ids = ids;
+  // console.log('createEntities state', state.ids);
+  // console.log('createEntities ids', ids);
+  return entities;
+
+};
+// const createEnitites = (array: any[], keyField, state?) => {
+//   const ids = array.map(pay => pay.id);
+//   const entities: {
+//     [key: number]: any;
+//   } = {};
+//   array.forEach(item => {
+//     entities[item[keyField]] = item;
+//   });
+//   console.log('createEntities state', state.ids);
+//   console.log('createEntities ids', ids);
+//   return {entities, ids};
+
+// };
