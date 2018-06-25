@@ -6,7 +6,8 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { of } from 'rxjs';
 import { RouterState, RouterStateModel } from './router.state';
 import { createEnitites } from './entity.utils';
-import { EntityState, EntityAdapter, createEntityAdapter } from './entity.model';
+import { EntityState } from './entity.model';
+import { EntityService } from './entity.class';
 
 export interface ClientStateModel extends EntityState<Client> {
   loading: boolean;
@@ -54,7 +55,7 @@ export class ClientState {
     return state.entities[state.selectedId];
   }
 
-  constructor(private api: DataService) { }
+  constructor(private api: DataService, private ent: EntityService) { }
 
   //#region ---- Load List State ----
   @Action(LoadClient)
@@ -78,7 +79,8 @@ export class ClientState {
     patchState({
       ...state,
       loading: false,
-      entities: createEnitites(payload, 'id', state)
+      // entities: createEnitites(payload, 'id', state)
+      entities: this.ent.createEnitites(payload, 'id', state)
     });
   }
 
