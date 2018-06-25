@@ -1,14 +1,14 @@
 import { map, catchError } from 'rxjs/operators';
 import { LoadClient, LoadClientSuccess, LoadClientFail, SelectClient } from './client.actions';
 import { DataService } from './../services/data.service';
-import { Payload, DataApi } from './../models/data-api';
+import { Client, DataApi } from './../models/data-api';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { of } from 'rxjs';
 import { RouterState, RouterStateModel } from './router.state';
 import { createEnitites } from './entity.utils';
 import { EntityState } from './entity.model';
 
-export interface ClientStateModel extends EntityState<Payload> {
+export interface ClientStateModel extends EntityState<Client> {
   loading: boolean;
   failed: boolean;
   selectedId: string | number;

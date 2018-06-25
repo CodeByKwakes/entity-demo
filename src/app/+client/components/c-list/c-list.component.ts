@@ -1,4 +1,4 @@
-import { Payload } from './../../../core/models/data-api';
+import { Client } from './../../../core/models/data-api';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -7,11 +7,11 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./c-list.component.scss']
 })
 export class CListComponent implements OnInit {
-  private _list: Payload[] = [];
-  public get list(): Payload[] {
+  private _list: Client[] = [];
+  public get list(): Client[] {
     return this._list;
   }
-  @Input() public set list(value: Payload[]) {
+  @Input() public set list(value: Client[]) {
     this._list = value;
   }
   constructor() { }

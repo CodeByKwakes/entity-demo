@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { ClientState } from './../../../core/store/client.state';
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { Payload } from '../../../core/models/data-api';
+import { Client } from '../../../core/models/data-api';
 import { tap, map } from 'rxjs/operators';
 import { SelectClient } from '../../../core/store/client.actions';
 
@@ -13,8 +13,8 @@ import { SelectClient } from '../../../core/store/client.actions';
   styleUrls: ['./item.component.scss']
 })
 export class ItemComponent implements OnInit {
-  @Select(ClientState.getSelectedClient) client$: Observable<Payload>;
-  @Select(ClientState.getSelected) selected$: Observable<Payload>;
+  @Select(ClientState.getSelectedClient) client$: Observable<Client>;
+  @Select(ClientState.getSelected) selected$: Observable<Client>;
   @Select(RouterState.getRouterParams) params$: Observable<any>;
   constructor(private store: Store) { }
 

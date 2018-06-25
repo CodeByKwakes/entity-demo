@@ -1,11 +1,11 @@
-import { Payload } from './../models/data-api';
+import { Client } from './../models/data-api';
 export class LoadClient {
   static readonly type = '[Client] Load Client';
 }
 
 export class LoadClientSuccess {
   static readonly type = '[Client] Load Client Success';
-  constructor(public readonly payload: Payload[]) { }
+  constructor(public readonly payload: Client[]) { }
 }
 
 export class LoadClientFail {

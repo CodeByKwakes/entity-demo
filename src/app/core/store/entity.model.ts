@@ -1,3 +1,4 @@
+// #region --- Models ---
 export declare type ComparerStr<T> = (a: T, b: T) => string;
 export declare type ComparerNum<T> = (a: T, b: T) => number;
 export declare type Comparer<T> = ComparerNum<T> | ComparerStr<T>;
@@ -57,12 +58,16 @@ export interface EntityAdapter<T> extends EntityStateAdapter<T> {
   getSelectors(): EntitySelectors<T, EntityState<T>>;
   getSelectors<V>(selectState: (state: V) => EntityState<T>): EntitySelectors<T, V>;
 }
+// #endregion --- Models ---
 
+// #region --- create Entity Adapter ---
 export declare function createEntityAdapter<T>(options?: {
   selectId?: IdSelector<T>;
   sortComparer?: false | Comparer<T>;
 }): EntityAdapter<T>;
+// #endregion --- create Entity Adapter   ---
 
+// #region ---  entity_state ---
 export declare function getInitialEntityState<V>(): EntityState<V>;
 export declare function createInitialStateFactory<V>(): {
   getInitialState: {
@@ -70,3 +75,30 @@ export declare function createInitialStateFactory<V>(): {
     <S extends object>(additionalState: S): EntityState<V> & S;
   };
 };
+// #endregion ---  entity_state  ---
+
+// #region --- sorted_state_adapter.d.ts  ---
+export declare function createSortedStateAdapter<T>(selectId: IdSelector<T>, sort: Comparer<T>): EntityStateAdapter<T>;
+// #endregion ---  sorted_state_adapter.d.ts  ---
+
+// #region --- state_adapter  ---
+export declare enum DidMutate {
+  EntitiesOnly = 0,
+  Both = 1,
+  None = 2,
+}
+export declare function createStateOperator<V, R>(mutator: (arg: R, state: EntityState<V>) => DidMutate): EntityState<V>;
+// #endregion ---  state_adapter  ---
+
+// #region --- state_selectors  ---
+export declare function createSelectorsFactory<T>(): {
+  getSelectors: {
+    (): EntitySelectors<T, EntityState<T>>;
+    <V>(selectState: (state: V) => EntityState<T>): EntitySelectors<T, V>;
+  };
+};
+// #endregion ---  state_selectors  ---
+
+// #region --- unsorted_state_adapter  ---
+export declare function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): EntityStateAdapter<T>;
+// #endregion ---    ---
