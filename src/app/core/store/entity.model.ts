@@ -61,7 +61,7 @@ export interface EntityAdapter<T> extends EntityStateAdapter<T> {
 // #endregion --- Models ---
 
 // #region --- create Entity Adapter ---
-export declare function createEntityAdapter<T, S extends object>(
+export declare function createEntityAdapter<T>(
   options?: {
     selectId?: IdSelector<T>;
     sortComparer?: false | Comparer<T>;
