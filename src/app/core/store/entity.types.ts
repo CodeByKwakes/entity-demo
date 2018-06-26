@@ -18,14 +18,31 @@ export interface EntityState<T = any> {
 /** Entity id interface */
 export type IdKey = number | string;
 
-
 export const getInitialEntitiesState = (args?) => {
 
- return {
+  return {
     entities: {},
     ids: [],
-    loading: true,
-    error: null,
+    loading: false,
     ...args
   };
+};
+
+
+export const getEntities = (array: any[], state, keyField?) => {
+  if (!keyField) {
+    keyField = 'id';
+  }
+  const ids = array.map(item => item[keyField]);
+  state.ids = ids;
+  return array.reduce((entities, item) => {
+    // console.log('ojb', obj)
+    return {
+      ...entities,
+      [item[keyField]]: item
+    };
+  },
+    {
+      ...state.entities
+    });
 };

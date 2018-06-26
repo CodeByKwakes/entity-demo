@@ -1,13 +1,11 @@
-import { map, catchError } from 'rxjs/operators';
-import { LoadClient, LoadClientSuccess, LoadClientFail, SelectClient } from './client.actions';
-import { DataService } from './../services/data.service';
-import { Client, DataApi } from './../models/data-api';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { Client, DataApi } from './../models/data-api';
+import { DataService } from './../services/data.service';
+import { LoadClient, LoadClientFail, LoadClientSuccess, SelectClient } from './client.actions';
+import { EntityState, getEntities, getInitialEntitiesState } from './entity.types';
 import { RouterState, RouterStateModel } from './router.state';
-import { createEnitites } from './entity.utils';
-import { EntityState, getInitialEntitiesState } from './entity.types';
-
 
 export interface ClientStateModel extends EntityState<Client> {
   selectedId: string | number;
@@ -16,7 +14,6 @@ export interface ClientStateModel extends EntityState<Client> {
 const initialState: ClientStateModel = getInitialEntitiesState({
   selectedId: null
 });
-console.log(initialState);
 
 @State<ClientStateModel>({
   name: 'Client',
@@ -69,8 +66,7 @@ export class ClientState {
     patchState({
       ...state,
       loading: false,
-      // entities: createEnitites(payload, 'id', state)
-      entities: createEnitites(payload, 'id', state)
+      entities: getEntities(payload, state)
     });
   }
 
