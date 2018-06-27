@@ -1,4 +1,5 @@
-import { EntityState } from './entity.types';
+/** Entity id interface */
+export type IdKey = number | string;
 
 export declare interface EntityMetaNum<T> {
   [key: number]: T;
@@ -12,11 +13,8 @@ export interface EntityState<T = any> {
   ids?: IdKey[];
   entities?: EntityMeta<T>;
   loading?: boolean;
-  error?: any;
+  error?: Error;
 }
-
-/** Entity id interface */
-export type IdKey = number | string;
 
 export const getInitialEntitiesState = (args?) => {
 
@@ -28,7 +26,6 @@ export const getInitialEntitiesState = (args?) => {
   };
 };
 
-
 export const getEntities = (array: any[], state, keyField?) => {
   if (!keyField) {
     keyField = 'id';
@@ -36,7 +33,6 @@ export const getEntities = (array: any[], state, keyField?) => {
   const ids = array.map(item => item[keyField]);
   state.ids = ids;
   return array.reduce((entities, item) => {
-    // console.log('ojb', obj)
     return {
       ...entities,
       [item[keyField]]: item
