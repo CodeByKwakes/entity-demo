@@ -36,7 +36,6 @@ export const getEntities = (array: any[], state, keyField?) => {
   const ids = array.map(item => item[keyField]);
   state.ids = ids;
   return array.reduce((entities, item) => {
-
     return {
       ...entities,
       [item[keyField]]: item
