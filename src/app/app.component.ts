@@ -11,6 +11,6 @@ export class AppComponent {
   title = 'app';
 
   constructor(private store: Store) {
-    this.store.dispatch(new LoadClient());
+    // this.store.dispatch(new LoadClient());
   }
 }

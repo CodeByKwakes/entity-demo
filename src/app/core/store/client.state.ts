@@ -34,6 +34,10 @@ export class ClientState {
     return state.loading;
   }
 
+  @Selector() static hasLoaded(state: ClientStateModel) {
+    return state.loaded;
+  }
+
   @Selector() static getClientEntities(state: ClientStateModel) {
     return state.entities;
   }
@@ -66,6 +70,7 @@ export class ClientState {
     patchState({
       ...state,
       loading: false,
+      loaded: true,
       entities: getEntities(payload, state)
     });
   }
