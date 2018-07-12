@@ -5,7 +5,8 @@ import { filter, map } from 'rxjs/operators';
 
 // ------ Router Model -------
 export interface RouterStateModel {
-  path: string;
+  url?: string;
+  path?: any[];
   queryParams?: any;
   params?: any;
 }
@@ -85,9 +86,11 @@ export class RouterState {
 
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
+      .subscribe((event: NavigationEnd ) => {
+        console.log('event', event);
+        const url = event.url;
         const { params, queryParams, routeConfig: { path } } = this.activatedRoute;
-        this.store.dispatch(new RouteChange({ params, queryParams, path }));
+        this.store.dispatch(new RouteChange({ params, queryParams, url }));
       });
   }
 }
