@@ -1,4 +1,4 @@
-/** Entity id interface */
+/** Entity Id/Key interface */
 export type IdKey = number | string;
 
 export declare interface EntityMetaNum<T> {
@@ -9,11 +9,13 @@ export declare abstract class EntityMeta<T> implements EntityMetaNum<T> {
   [key: string]: T;
 }
 
+/** EntityState interface */
 export interface EntityState<T = any> {
   ids?: IdKey[];
   entities?: EntityMeta<T>;
   loading?: boolean;
-  error?: Error;
+  loaded?: boolean;
+  error?: any;
 }
 
 export const getInitialEntitiesState = (args?) => {
@@ -22,6 +24,7 @@ export const getInitialEntitiesState = (args?) => {
     entities: {},
     ids: [],
     loading: false,
+    loaded: false,
     ...args
   };
 };
