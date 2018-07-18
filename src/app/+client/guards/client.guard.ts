@@ -25,10 +25,17 @@ export class ClientGuard implements CanActivate {
   private checkStore(): Observable<boolean> {
     return this.store.select(state => state.Client.loaded)
       .pipe(
-        tap(loaded => {
-          if (!loaded) { this.store.dispatch(new LoadClient()); }
+        // tap(loaded => {
+        //   if (!loaded) { this.store.dispatch(new LoadClient()); }
+        // }),
+        // filter(loaded => loaded),
+        // take(1)
+        switchMap(loaded => {
+          if (!loaded) {
+            this.store.dispatch(new LoadClient());
+          }
+          return of(true);
         }),
-        filter(loaded => loaded),
         take(1)
       );
   }
