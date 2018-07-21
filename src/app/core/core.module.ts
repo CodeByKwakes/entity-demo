@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { environment } from '../../environments/environment';
 
 
 @NgModule({
@@ -15,7 +16,9 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
       RouterState
     ]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsLoggerPluginModule.forRoot()
+    NgxsLoggerPluginModule.forRoot({
+      disabled: environment.production
+    })
   ],
   declarations: []
 })

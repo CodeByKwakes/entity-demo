@@ -70,9 +70,9 @@ export class ClientState {
 
     patchState({
       ...state,
+      entities,
       loading: false,
-      loaded: true,
-      entities
+      loaded: true
     });
   }
 
