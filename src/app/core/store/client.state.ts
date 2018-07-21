@@ -4,14 +4,14 @@ import { catchError, map } from 'rxjs/operators';
 import { Client, DataApi } from './../models/data-api';
 import { DataService } from './../services/data.service';
 import { LoadClient, LoadClientFail, LoadClientSuccess, SelectClient } from './client.actions';
-import { EntityState, getEntities, getInitialEntitiesState } from './entity.types';
+import { EntityState, createEntities, initialEntitiesState } from './entity.types';
 import { RouterState, RouterStateModel } from './router.state';
 
 export interface ClientStateModel extends EntityState<Client> {
   selectedId: string | number;
 }
 
-const initialState: ClientStateModel = getInitialEntitiesState({
+const initialState: ClientStateModel = initialEntitiesState({
   selectedId: null
 });
 
@@ -66,12 +66,13 @@ export class ClientState {
   @Action(LoadClientSuccess)
   loadClientSuccess({ getState, patchState }: StateContext<ClientStateModel>, { payload }: LoadClientSuccess) {
     const state = getState();
+    const entities = createEntities<Client>(payload, state);
 
     patchState({
       ...state,
       loading: false,
       loaded: true,
-      entities: getEntities(payload, state)
+      entities
     });
   }
 
