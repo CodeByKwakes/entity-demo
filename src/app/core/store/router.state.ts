@@ -1,11 +1,12 @@
 import { Location } from '@angular/common';
 import { ActivatedRouteSnapshot, ActivationEnd, NavigationEnd, Router } from '@angular/router';
-import { Action, State, StateContext, Store, Selector } from '@ngxs/store';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { filter, map } from 'rxjs/operators';
 
 // ------ Router Model -------
 export interface RouterStateModel {
-  path: string;
+  url?: string;
+  path?: any[];
   queryParams?: any;
   params?: any;
 }
@@ -37,8 +38,8 @@ export class RouterState {
 
   private activatedRoute: ActivatedRouteSnapshot;
 
-  @Selector() static getRouterPath(state: RouterStateModel) {
-    return state.path;
+  @Selector() static getRouterUrl(state: RouterStateModel) {
+    return state.url;
   }
 
   @Selector() static getRouterParams(state: RouterStateModel) {
@@ -53,7 +54,7 @@ export class RouterState {
   }
 
   @Action(RouterGo)
-  routerGo({ setState }: StateContext<RouterStateModel>, { payload: { path, queryParams, extras } }: RouterGo) {
+  routerGo({ payload: { path, queryParams, extras } }: RouterGo) {
     this.router.navigate(path, { queryParams, ...extras });
   }
 
@@ -85,9 +86,10 @@ export class RouterState {
 
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
+      .subscribe((event: NavigationEnd ) => {
+        const url = event.url;
         const { params, queryParams, routeConfig: { path } } = this.activatedRoute;
-        this.store.dispatch(new RouteChange({ params, queryParams, path }));
+        this.store.dispatch(new RouteChange({ params, queryParams, url }));
       });
   }
 }

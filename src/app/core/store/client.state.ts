@@ -1,31 +1,23 @@
-import { map, catchError } from 'rxjs/operators';
-import { LoadClient, LoadClientSuccess, LoadClientFail, SelectClient } from './client.actions';
-import { DataService } from './../services/data.service';
-import { Payload, DataApi } from './../models/data-api';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { Client, DataApi } from './../models/data-api';
+import { DataService } from './../services/data.service';
+import { LoadClient, LoadClientFail, LoadClientSuccess, SelectClient } from './client.actions';
+import { EntityState, createEntities, initialEntitiesState } from './entity.types';
 import { RouterState, RouterStateModel } from './router.state';
 
-interface EntityState<V> {
-  ids: string[] | number[];
-  entities: { [key: string]: V };
-}
-
-export interface ClientStateModel extends EntityState<Payload> {
-  loading: boolean;
-  failed: boolean;
+export interface ClientStateModel extends EntityState<Client> {
   selectedId: string | number;
 }
 
+const initialState: ClientStateModel = initialEntitiesState({
+  selectedId: null
+});
+
 @State<ClientStateModel>({
   name: 'Client',
-  defaults: {
-    ids: [],
-    entities: {},
-    loading: false,
-    failed: false,
-    selectedId: null
-  }
+  defaults: initialState
 })
 
 export class ClientState {
@@ -40,6 +32,10 @@ export class ClientState {
 
   @Selector() static isLoading(state: ClientStateModel) {
     return state.loading;
+  }
+
+  @Selector() static hasLoaded(state: ClientStateModel) {
+    return state.loaded;
   }
 
   @Selector() static getClientEntities(state: ClientStateModel) {
@@ -70,16 +66,13 @@ export class ClientState {
   @Action(LoadClientSuccess)
   loadClientSuccess({ getState, patchState }: StateContext<ClientStateModel>, { payload }: LoadClientSuccess) {
     const state = getState();
-    // const enitites = arrayToObject(payload, state, 'id');
-    // const enitites = createEnitites(payload, 'id', state);
-
-    // const ids = payload.map(pay => pay.id);
+    const entities = createEntities<Client>(payload, state);
 
     patchState({
       ...state,
+      entities,
       loading: false,
-      // ...createEnitites(payload, 'id', state)
-      entities: createEnitites(payload, 'id', state)
+      loaded: true
     });
   }
 
@@ -89,7 +82,7 @@ export class ClientState {
     patchState({
       ...state,
       loading: false,
-      failed: true,
+      error: payload
     });
   }
 
@@ -104,43 +97,3 @@ export class ClientState {
 
   //#endregion;
 }
-
-// const arrayToObject = (array, state, keyField) =>
-//   array.reduce((obj, item) => {
-//     return {
-//       ...obj,
-//       [item[keyField]]: item
-//     };
-//   },
-//     {
-//       ...state.obj
-//     });
-
-
-const createEnitites = (array: any[], keyField, state?) => {
-  const ids = array.map(item => item[keyField]);
-  const entities: {
-    [key: number]: any;
-  } = {};
-  array.forEach(item => {
-    entities[item[keyField]] = item;
-  });
-  state.ids = ids;
-  // console.log('createEntities state', state.ids);
-  // console.log('createEntities ids', ids);
-  return entities;
-
-};
-// const createEnitites = (array: any[], keyField, state?) => {
-//   const ids = array.map(pay => pay.id);
-//   const entities: {
-//     [key: number]: any;
-//   } = {};
-//   array.forEach(item => {
-//     entities[item[keyField]] = item;
-//   });
-//   console.log('createEntities state', state.ids);
-//   console.log('createEntities ids', ids);
-//   return {entities, ids};
-
-// };

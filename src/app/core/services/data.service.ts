@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Payload } from '../models/data-api';
-import { Observable } from 'rxjs';
+import { Client } from '../models/data-api';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,25 +13,40 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   // Create Item
-  create(client: Payload): Observable<Payload> {
-    return this.http.post<Payload>(this.URL, client);
+  create(client: Client): Observable<Client> {
+    return this.http.post<Client>(this.URL, client)
+      .pipe(
+        catchError(error => throwError(error.json()))
+      );
   }
   // Delete Item
-  delete(client: Payload): Observable<Payload> {
-    return this.http.delete<Payload>(`${this.URL}/${client.id}`);
+  delete(client: Client): Observable<Client> {
+    return this.http.delete<Client>(`${this.URL}/${client.id}`)
+      .pipe(
+        catchError(error => throwError(error.json()))
+      );
   }
 
   // Get Item
 
-  get(id: string): Observable<Payload> {
-    return this.http.get<Payload>(`${this.URL}/${id}`);
+  get(id: string): Observable<Client> {
+    return this.http.get<Client>(`${this.URL}/${id}`)
+      .pipe(
+        catchError(error => throwError(error.json()))
+      );
   }
   // Get List
-  list(): Observable<Payload[]> {
-    return this.http.get<Payload[]>(this.URL);
+  list(): Observable<Client[]> {
+    return this.http.get<Client[]>(this.URL)
+      .pipe(
+        catchError(error => throwError(error.json()))
+      );
   }
   // Update Item
-  update(client: Payload): Observable<Payload> {
-    return this.http.put<Payload>(`${this.URL}/${client.id}`, client);
+  update(client: Client): Observable<Client> {
+    return this.http.put<Client>(`${this.URL}/${client.id}`, client)
+      .pipe(
+        catchError(error => throwError(error.json()))
+      );
   }
 }

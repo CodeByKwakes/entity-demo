@@ -6,7 +6,7 @@ export interface DataApi {
 }
 
 export interface Data {
-  payload: Payload[];
+  payload: Client[];
   page: Page;
 }
 
@@ -15,7 +15,7 @@ export interface Page {
   length: number;
 }
 
-export interface Payload {
+export interface Client {
   id: string;
   meta: Meta;
 }
