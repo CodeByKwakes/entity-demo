@@ -15,5 +15,5 @@ export class LoadClientFail {
 
 export class SelectClient {
   static readonly type = '[Client] Select Client';
-  constructor(public readonly payload: string) { }
+  constructor(public readonly payload: string | number) { }
 }

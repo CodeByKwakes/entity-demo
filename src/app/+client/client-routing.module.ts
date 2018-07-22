@@ -1,3 +1,4 @@
+import { ClientExistsGuard } from './guards/client-exists.guard';
 import { ClientGuard } from './guards/client.guard';
 import { ItemComponent } from './routes/item/item.component';
 import { NgModule } from '@angular/core';
@@ -12,6 +13,7 @@ const routes: Routes = [
   },
   {
     path: ':clientId',
+    canActivate: [ClientExistsGuard],
     component: ItemComponent
   }
 ];

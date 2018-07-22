@@ -14,8 +14,8 @@ export class AppComponent {
   title = 'app';
 
   constructor(private store: Store, private router: Router) {
-    this.store.dispatch(new LoadClient());
-    this.getCurrentUrlSnapshot().subscribe(data => console.log('data', data));
+    // this.store.dispatch(new LoadClient());
+    // this.getCurrentUrlSnapshot().subscribe(data => console.log('data', data));
   }
 
   private getCurrentUrlSnapshot(): Observable<ActivatedRouteSnapshot> {

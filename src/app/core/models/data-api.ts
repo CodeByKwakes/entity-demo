@@ -16,7 +16,7 @@ export interface Page {
 }
 
 export interface Client {
-  id: string;
+  id: string| number;
   meta: Meta;
 }
 

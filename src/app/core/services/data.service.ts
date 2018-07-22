@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Client } from '../models/data-api';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { rxjsDebug } from '../utils/rxjs-debug';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,7 @@ export class DataService {
   list(): Observable<Client[]> {
     return this.http.get<Client[]>(this.URL)
       .pipe(
+        rxjsDebug(2, 'get list'),
         catchError(error => throwError(error.json()))
       );
   }
