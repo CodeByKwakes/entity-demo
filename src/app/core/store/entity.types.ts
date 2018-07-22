@@ -15,7 +15,7 @@ export interface EntityState<T = any> {
   entities?: EntityMeta<T>;
   loading?: boolean;
   loaded?: boolean;
-  error?: any;
+  error?: Error;
 }
 
 export const initialEntitiesState = (args?: any) => {
@@ -29,13 +29,13 @@ export const initialEntitiesState = (args?: any) => {
   };
 };
 
-export const createEntities = <T = any>(array: T[], state, keyField?) => {
+export const createEntities = <T = any>(array: T[], state, keyField?: string) => {
   if (!keyField) {
     keyField = 'id';
   }
   const ids = array.map(item => item[keyField]);
   state.ids = ids;
-  return array.reduce((entities: EntityMeta<T>, item) => {
+  return array.reduce((entities: EntityMeta<T>, item: T) => {
     return {
       ...entities,
       [item[keyField]]: item
