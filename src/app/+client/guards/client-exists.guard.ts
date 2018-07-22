@@ -14,19 +14,17 @@ import { rxjsDebug } from '../../core/utils/rxjs-debug';
 export class ClientExistsGuard implements CanActivate {
 
   constructor(private store: Store) { }
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     return this.checkStore()
       .pipe(
         switchMap(() => {
-        const id = route.paramMap.get('clientId');
+          const id = route.paramMap.get('clientId');
           return this.hasClient(id);
         })
       );
   }
 
-  // hasPizza(id: number): Observable<boolean> {
+  // hasClient(id: number | string): Observable<boolean> {
   //   return this.store.select(ClientState.getAllClient).pipe(
   //     map((clients: Client[]) => clients.find(client => client.id === id)),
   //     switchMap(client => {
@@ -42,16 +40,17 @@ export class ClientExistsGuard implements CanActivate {
 
   hasClient(id: number | string): Observable<boolean> {
     return this.store.select(ClientState.getAllClient).pipe(
-      map((entities: { [key: number]: Client }) => entities[id]),
-      // rxjsDebug(2, 'has client value'),
-      switchMap(client => {
-        if (!!client) {
-          return this.store
-            .dispatch(new SelectClient(client.id))
-            .pipe(switchMap(() => of(true)));
-        }
-        return of(false);
-      })
+      map((entities: { [key: number]: Client }) => !!entities[id]),
+      rxjsDebug(2, 'has client value'),
+      take(1)
+      // switchMap(client => {
+      //   if (!!client) {
+      //     return this.store
+      //       .dispatch(new SelectClient(client.id))
+      //       .pipe(switchMap(() => of(true)));
+      //   }
+      //   return of(false);
+      // })
     );
   }
 
