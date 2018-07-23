@@ -6,7 +6,7 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { environment } from '../../environments/environment';
-
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 
 @NgModule({
   imports: [
@@ -18,7 +18,8 @@ import { environment } from '../../environments/environment';
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot({
       disabled: environment.production
-    })
+    }),
+    NgxsStoragePluginModule.forRoot()
   ],
   declarations: []
 })
