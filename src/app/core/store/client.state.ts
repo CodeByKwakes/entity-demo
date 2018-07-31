@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Client, DataApi } from './../models/data-api';
 import { DataService } from './../services/data.service';
-import { LoadClient, LoadClientFail, LoadClientSuccess, SelectClient } from './client.actions';
+import { LoadClient, LoadClientError, LoadClientSuccess, SelectClient } from './client.actions';
 import { EntityState, createEntities, initialEntitiesState } from './entity.types';
 import { RouterState, RouterStateModel } from './router.state';
 
@@ -59,7 +59,9 @@ export class ClientState {
     return this.api.list()
       .pipe(
         map((response: DataApi) => dispatch(new LoadClientSuccess(response.data.payload))),
-        catchError(err => of(new LoadClientFail(err)))
+        catchError(err => of(
+          dispatch(new LoadClientError(err))
+        ))
       );
   }
 
@@ -76,8 +78,8 @@ export class ClientState {
     });
   }
 
-  @Action(LoadClientFail)
-  loadClientFail({ getState, patchState }: StateContext<ClientStateModel>, { payload }: LoadClientFail) {
+  @Action(LoadClientError)
+  loadClientFail({ getState, patchState }: StateContext<ClientStateModel>, { payload }: LoadClientError) {
     const state = getState();
     patchState({
       ...state,

@@ -17,14 +17,14 @@ export class DataService {
   create(client: Client): Observable<Client> {
     return this.http.post<Client>(this.URL, client)
       .pipe(
-        catchError(error => throwError(error.json()))
+        catchError(error => throwError(error))
       );
   }
   // Delete Item
   delete(client: Client): Observable<Client> {
     return this.http.delete<Client>(`${this.URL}/${client.id}`)
       .pipe(
-        catchError(error => throwError(error.json()))
+        catchError(error => throwError(error))
       );
   }
 
@@ -33,7 +33,7 @@ export class DataService {
   get(id: string): Observable<Client> {
     return this.http.get<Client>(`${this.URL}/${id}`)
       .pipe(
-        catchError(error => throwError(error.json()))
+        catchError(error => throwError(error))
       );
   }
   // Get List
@@ -41,14 +41,14 @@ export class DataService {
     return this.http.get<Client[]>(this.URL)
       .pipe(
         rxjsDebug(2, 'get list'),
-        catchError(error => throwError(error.json()))
+        catchError(error => throwError(error))
       );
   }
   // Update Item
   update(client: Client): Observable<Client> {
     return this.http.put<Client>(`${this.URL}/${client.id}`, client)
       .pipe(
-        catchError(error => throwError(error.json()))
+        catchError(error => throwError(error))
       );
   }
 }

@@ -8,7 +8,7 @@ export class LoadClientSuccess {
   constructor(public readonly payload: Client[]) { }
 }
 
-export class LoadClientFail {
+export class LoadClientError {
   static readonly type = '[Client] Load Client Fail';
   constructor(public readonly payload?: any) { }
 }
