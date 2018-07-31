@@ -27,7 +27,7 @@ export class ClientState {
   }
 
   @Selector([RouterState]) static getSelectedClient(state: ClientStateModel, router: RouterStateModel) {
-    return router && state.entities[router.params.clientId];
+    return router && state.entities[router.params.get('clientId')];
   }
 
   @Selector() static isLoading(state: ClientStateModel) {

@@ -21,7 +21,7 @@ export class ItemComponent implements OnInit {
   ngOnInit() {
     this.params$
       .pipe(
-        map(param => param.clientId),
+      map(param => param.get('clientId')),
         tap(param => this.store.dispatch(new SelectClient(param)))
       )
       .subscribe();

@@ -19,7 +19,7 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
     NgxsLoggerPluginModule.forRoot({
       disabled: environment.production
     }),
-    NgxsStoragePluginModule.forRoot()
+    // NgxsStoragePluginModule.forRoot()
   ],
   declarations: []
 })

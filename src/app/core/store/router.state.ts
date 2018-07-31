@@ -88,8 +88,8 @@ export class RouterState {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd ) => {
         const url = event.url;
-        const { params, queryParams, routeConfig: { path } } = this.activatedRoute;
-        this.store.dispatch(new RouteChange({ params, queryParams, url }));
+        const { paramMap, queryParams, routeConfig: { path } } = this.activatedRoute;
+        this.store.dispatch(new RouteChange({ params: paramMap, queryParams, url }));
       });
   }
 }
