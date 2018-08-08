@@ -1,2 +1,3 @@
 <li *ngFor="let client of list"
-    [routerLink]="['/client', client.id]"> {{client.meta.name}}</li>
+    [routerLink]="['/client', client.id]"
+    (click)="selectedId.emit(client.id)"> {{client.meta.name}}</li>

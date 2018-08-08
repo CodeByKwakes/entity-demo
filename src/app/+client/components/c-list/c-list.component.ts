@@ -1,5 +1,5 @@
 import { Client } from './../../../core/models/data-api';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-c-list',
@@ -14,6 +14,7 @@ export class CListComponent implements OnInit {
   @Input() public set list(value: Client[]) {
     this._list = value;
   }
+  @Output() selectedId = new EventEmitter();
   constructor() { }
 
   ngOnInit() {

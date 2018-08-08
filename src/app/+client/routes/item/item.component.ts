@@ -19,20 +19,19 @@ export class ItemComponent implements OnInit {
   constructor(private store: Store) { }
 
   ngOnInit() {
-    this.params$
-      .pipe(
-      map(param => param.get('clientId')),
-        tap(param => this.store.dispatch(new SelectClient(param)))
-      )
-      .subscribe();
+    // this.params$
+    //   .pipe(
+    //     map(param => param.get('clientId')),
+    //     tap(param => this.store.dispatch(new SelectClient(param)))
+    //   );
 
-    this.client$
-      .pipe(
-        tap(client => console.log('client', client))
-      )
-      .subscribe();
 
-      this.selected$.subscribe();
+    // this.client$
+    //   .pipe(
+    //     tap(client => console.log('client', client))
+    //   );
+
+
   }
 
 

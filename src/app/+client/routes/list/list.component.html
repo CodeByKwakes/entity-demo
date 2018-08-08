@@ -1,3 +1,4 @@
 <ul>
-  <app-c-list [list]="client$ |async"></app-c-list>
+  <app-c-list [list]="client$ |async"
+              (selectedId)="onRouteClient($event)"></app-c-list>
 </ul>
