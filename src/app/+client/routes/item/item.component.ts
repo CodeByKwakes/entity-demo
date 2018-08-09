@@ -16,6 +16,7 @@ export class ItemComponent implements OnInit {
   @Select(ClientState.getSelectedClient) client$: Observable<Client>;
   @Select(ClientState.getSelected) selected$: Observable<Client>;
   @Select(RouterState.getRouterParams) params$: Observable<any>;
+  @Select(ClientState.selectedClient()) newSelected$: Observable<Client>;
   constructor(private store: Store) { }
 
   ngOnInit() {

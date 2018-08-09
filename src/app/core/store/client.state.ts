@@ -1,4 +1,5 @@
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { ParamMap } from '@angular/router';
+import { Action, Selector, State, StateContext, createSelector } from '@ngxs/store';
 import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Client, DataApi } from './../models/data-api';
@@ -27,7 +28,13 @@ export class ClientState {
   }
 
   @Selector([RouterState]) static getSelectedClient(state: ClientStateModel, router: RouterStateModel) {
-    return state.entities[router.params.get('clientId')];
+    return state.entities[router.paramMap.get('clientId')];
+  }
+
+  static selectedClient() {
+    return createSelector([ClientState.getClientEntities, RouterState.getRouterParams],
+      (client: Client, router: ParamMap) => client[router.get('clientId')]
+    );
   }
 
   @Selector() static isLoading(state: ClientStateModel) {
@@ -45,6 +52,7 @@ export class ClientState {
   @Selector() static getSelected(state: ClientStateModel) {
     return state.entities[state.selectedId];
   }
+
 
   constructor(private api: DataService) { }
 

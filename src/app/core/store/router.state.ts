@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { ActivatedRouteSnapshot, ActivationEnd, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, ActivationEnd, NavigationEnd, Router, ParamMap } from '@angular/router';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { filter, map } from 'rxjs/operators';
 
@@ -7,14 +7,14 @@ import { filter, map } from 'rxjs/operators';
 export interface RouterStateModel {
   url?: string;
   path?: any[];
-  queryParams?: any;
-  params?: any;
+  queryParamMap?: ParamMap;
+  paramMap?: ParamMap;
 }
 
 // ---- Router Action ------
 export class RouterGo {
   static readonly type = '[Router] Go';
-  constructor(public readonly payload: { path, queryParams?, extras?}) { }
+  constructor(public readonly payload: { path, queryParamMap?, extras?}) { }
 }
 
 export class RouterBack {
@@ -43,7 +43,7 @@ export class RouterState {
   }
 
   @Selector() static getRouterParams(state: RouterStateModel) {
-    return state.params;
+    return state.paramMap;
   }
 
   constructor(
@@ -54,8 +54,8 @@ export class RouterState {
   }
 
   @Action(RouterGo)
-  routerGo({ payload: { path, queryParams, extras } }: RouterGo) {
-    this.router.navigate(path, { queryParams, ...extras });
+  routerGo({ payload: { path, queryParamMap, extras } }: RouterGo) {
+    this.router.navigate(path, { queryParamMap, ...extras });
   }
 
   @Action(RouteChange)
@@ -88,8 +88,8 @@ export class RouterState {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd ) => {
         const url = event.url;
-        const { paramMap, queryParams, routeConfig: { path } } = this.activatedRoute;
-        this.store.dispatch(new RouteChange({ params: paramMap, queryParams, url }));
+        const { paramMap, queryParamMap, routeConfig: { path } } = this.activatedRoute;
+        this.store.dispatch(new RouteChange({ paramMap, queryParamMap, url }));
       });
   }
 }
