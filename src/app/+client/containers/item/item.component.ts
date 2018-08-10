@@ -1,11 +1,9 @@
-import { RouterState } from '../../../core/store/router/router.state';
-import { Observable } from 'rxjs';
-import { ClientState } from '../../../core/store/client/client.state';
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
 import { Client } from '../../../core/models/data-api';
-import { tap, map } from 'rxjs/operators';
-import { SelectClient } from '../../../core/store/client/client.actions';
+import { ClientState } from '../../../core/store/client/client.state';
+import { RouterState } from '../../../core/store/router/router.state';
 
 @Component({
   selector: 'app-item',
@@ -19,21 +17,7 @@ export class ItemComponent implements OnInit {
   @Select(ClientState.selectedClient()) newSelected$: Observable<Client>;
   constructor(private store: Store) { }
 
-  ngOnInit() {
-    // this.params$
-    //   .pipe(
-    //     map(param => param.get('clientId')),
-    //     tap(param => this.store.dispatch(new SelectClient(param)))
-    //   );
-
-
-    // this.client$
-    //   .pipe(
-    //     tap(client => console.log('client', client))
-    //   );
-
-
-  }
+  ngOnInit() {}
 
 
 }

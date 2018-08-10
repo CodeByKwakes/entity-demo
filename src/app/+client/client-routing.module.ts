@@ -1,9 +1,9 @@
-import { ClientExistsGuard } from './guards/client-exists.guard';
-import { ClientGuard } from './guards/client.guard';
-import { ItemComponent } from './routes/item/item.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListComponent } from './routes/list/list.component';
+import { ItemComponent } from './containers/item/item.component';
+import { ListComponent } from './containers/list/list.component';
+import { ClientExistsGuard } from './guards/client-exists.guard';
+import { ClientGuard } from './guards/client.guard';
 
 const routes: Routes = [
   {
