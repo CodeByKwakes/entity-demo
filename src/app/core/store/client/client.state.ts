@@ -1,20 +1,18 @@
 import { ParamMap } from '@angular/router';
-import { Action, Selector, State, StateContext, createSelector } from '@ngxs/store';
+import { Action, createSelector, Selector, State, StateContext } from '@ngxs/store';
 import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Client, DataApi } from '../../models/data-api';
 import { DataService } from '../../services/data.service';
-import { LoadClient, LoadClientError, LoadClientSuccess, SelectClient } from './client.actions';
-import { EntityState, createEntities, initialEntitiesState } from '../utils/entity.types';
 import { RouterState, RouterStateModel } from '../router/router.state';
+import { EntityState } from './../utils/entity.types';
+import { LoadClient, LoadClientError, LoadClientSuccess, SelectClient } from './client.actions';
+import { ClientStateModel } from './client.state';
+import { getEntities, initialState } from './client.utils';
 
 export interface ClientStateModel extends EntityState<Client> {
   selectedId: string | number;
 }
-
-const initialState: ClientStateModel = initialEntitiesState({
-  selectedId: null
-});
 
 @State<ClientStateModel>({
   name: 'Client',
@@ -67,23 +65,14 @@ export class ClientState {
     return this.api.list()
       .pipe(
         map((response: DataApi) => dispatch(new LoadClientSuccess(response.data.payload))),
-        catchError(err => of(
-          dispatch(new LoadClientError(err))
-        ))
+        catchError(err => of(dispatch(new LoadClientError(err))))
       );
   }
 
   @Action(LoadClientSuccess)
   loadClientSuccess({ getState, patchState }: StateContext<ClientStateModel>, { payload }: LoadClientSuccess) {
     const state = getState();
-    const entities = createEntities<Client>(payload, state);
-
-    patchState({
-      ...state,
-      entities,
-      loading: false,
-      loaded: true
-    });
+    patchState(getEntities(state, payload));
   }
 
   @Action(LoadClientError)

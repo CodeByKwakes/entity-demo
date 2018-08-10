@@ -1,4 +1,5 @@
 import { Client } from '../../models/data-api';
+
 export class LoadClient {
   static readonly type = '[Client] Load Client';
 }
