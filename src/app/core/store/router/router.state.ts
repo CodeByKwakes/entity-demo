@@ -1,3 +1,5 @@
+import { RouterGo, RouteChange, RouterForward, RouterBack } from './router.actions';
+
 import { Location } from '@angular/common';
 import { ActivatedRouteSnapshot, ActivationEnd, NavigationEnd, Router, ParamMap } from '@angular/router';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
@@ -9,25 +11,6 @@ export interface RouterStateModel {
   path?: any[];
   queryParamMap?: ParamMap;
   paramMap?: ParamMap;
-}
-
-// ---- Router Action ------
-export class RouterGo {
-  static readonly type = '[Router] Go';
-  constructor(public readonly payload: { path, queryParamMap?, extras?}) { }
-}
-
-export class RouterBack {
-  static readonly type = '[Router] Back';
-}
-
-export class RouterForward {
-  static readonly type = '[Router] Forward';
-}
-
-export class RouteChange {
-  static readonly type = '[Router] Route Change';
-  constructor(public payload: RouterStateModel) { }
 }
 
 @State<RouterStateModel>({

@@ -3,8 +3,8 @@ import { Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { LoadClient } from '../../core/store/client.actions';
-import { ClientState } from '../../core/store/client.state';
+import { LoadClient } from '../../core/store/client/client.actions';
+import { ClientState } from '../../core/store/client/client.state';
 
 @Injectable({
   providedIn: 'root'

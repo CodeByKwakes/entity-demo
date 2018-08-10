@@ -2,11 +2,11 @@ import { ParamMap } from '@angular/router';
 import { Action, Selector, State, StateContext, createSelector } from '@ngxs/store';
 import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Client, DataApi } from './../models/data-api';
-import { DataService } from './../services/data.service';
+import { Client, DataApi } from '../../models/data-api';
+import { DataService } from '../../services/data.service';
 import { LoadClient, LoadClientError, LoadClientSuccess, SelectClient } from './client.actions';
-import { EntityState, createEntities, initialEntitiesState } from './entity.types';
-import { RouterState, RouterStateModel } from './router.state';
+import { EntityState, createEntities, initialEntitiesState } from '../utils/entity.types';
+import { RouterState, RouterStateModel } from '../router/router.state';
 
 export interface ClientStateModel extends EntityState<Client> {
   selectedId: string | number;

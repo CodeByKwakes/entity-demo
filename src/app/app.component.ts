@@ -2,7 +2,7 @@ import { ActivatedRouteSnapshot, Router, ActivationEnd } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { LoadClient } from './core/store/client.actions';
+import { LoadClient } from './core/store/client/client.actions';
 import { map, filter } from 'rxjs/operators';
 
 @Component({

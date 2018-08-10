@@ -1,4 +1,4 @@
-import { Client } from '../models/data-api';
+import { Client } from '../../models/data-api';
 import { Dictionary } from './entity.model';
 import { Injectable } from '@angular/core';
 

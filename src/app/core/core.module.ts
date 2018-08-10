@@ -1,5 +1,5 @@
-import { RouterState } from './store/router.state';
-import { ClientState } from './store/client.state';
+import { RouterState } from './store/router/router.state';
+import { ClientState } from './store/client/client.state';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxsModule } from '@ngxs/store';

@@ -1,7 +1,7 @@
 import { Client } from './../../core/models/data-api';
-import { LoadClient, SelectClient } from './../../core/store/client.actions';
+import { LoadClient, SelectClient } from '../../core/store/client/client.actions';
 import { switchMap, take, map, filter, tap } from 'rxjs/operators';
-import { ClientState } from './../../core/store/client.state';
+import { ClientState } from '../../core/store/client/client.state';
 import { Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';

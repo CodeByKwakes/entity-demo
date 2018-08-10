@@ -1,8 +1,8 @@
-import { SelectClient } from './../../../core/store/client.actions';
+import { SelectClient } from '../../../core/store/client/client.actions';
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { ClientState } from '../../../core/store/client.state';
+import { ClientState } from '../../../core/store/client/client.state';
 import { Client } from './../../../core/models/data-api';
 
 @Component({

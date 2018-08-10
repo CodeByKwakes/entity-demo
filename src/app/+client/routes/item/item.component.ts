@@ -1,11 +1,11 @@
-import { RouterState } from './../../../core/store/router.state';
+import { RouterState } from '../../../core/store/router/router.state';
 import { Observable } from 'rxjs';
-import { ClientState } from './../../../core/store/client.state';
+import { ClientState } from '../../../core/store/client/client.state';
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Client } from '../../../core/models/data-api';
 import { tap, map } from 'rxjs/operators';
-import { SelectClient } from '../../../core/store/client.actions';
+import { SelectClient } from '../../../core/store/client/client.actions';
 
 @Component({
   selector: 'app-item',

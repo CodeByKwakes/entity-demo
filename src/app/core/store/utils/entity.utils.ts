@@ -1,4 +1,4 @@
-import { Client } from '../models/data-api';
+import { Client } from '../../models/data-api';
 import { Dictionary } from './entity.model';
 
 export const createEnitites = (array: any[], keyField, state?) => {
